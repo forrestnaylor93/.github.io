@@ -59,7 +59,7 @@ const build_scene = (ctx) =>{
             scene.display_title('score'); // display title if desired
 
             //display text if wanted
-            scene.display_text_lines(['Topics:', 'Find X & Y Coordinates', 'Label X & Y Coordinates', 'Slope Intuition - (Positive, Negative, Big, Small, Vertical, Horizontal)', 'Measuring Slope Visually', 'Measuring Slope with Formula', '', 'press i to continue'])
+            scene.display_text_lines(['Topics:', 'Find X & Y Coordinates', 'Label X & Y Coordinates', 'Slope Intuition - (Positive, Negative, Big, Small, Vertical, Horizontal)', 'Measuring Slope Visually', 'Measuring Slope with Formula', '', 'press i to continue', 'completed - 85%', 'time < 22 mins - 88 %', 'time < 15 mins - 92%' ,'time < 11 mins - 94%', 'time < 8 mins - 96%', 'time < 6 mins - 100%', 'time < 5:34 - 110%'])
 
             // display total time:
             scene.display_text_lines([scene.other_assets[0] + '  --total time: ' + minutes + ' : ' + seconds], 500, 500);

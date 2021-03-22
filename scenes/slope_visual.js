@@ -7,7 +7,7 @@ const build_scene = (ctx) =>{
     const scene = new Scene(ctx);
 
     // create instructions
-    scene.instructions = new Instructions('Visual Slope', [' Cound the lines visually to determine the slope', ' Find Δy - the change in y', ' Find Δx - the change in x', 'Then click outside the boxes', 'Finally press enter'] );
+    scene.instructions = new Instructions('Visual Slope', [' Cound the lines visually to determine the slope', ' Find Δy - the change in y', ' Find Δx - the change in x', 'Then click outside the boxes', 'Finally press enter', 'Must complete 4'] );
     
     scene.handle_instructions(); // handle instructions
     scene.end_contion = false; // set end condition to false initially
@@ -182,7 +182,7 @@ const build_scene = (ctx) =>{
             if(answer_point.y/answer_point.x ==  scene.slope){
                // console.log('correct!')
                 scene.score += 1;
-                if(scene.score >= 2){
+                if(scene.score >= 4){
                     scene.end_condition = true;
                     inputX.destroy();
                     inputY.destroy();
@@ -385,7 +385,7 @@ const build_scene = (ctx) =>{
             }else{ // otherwise break the loop
                 cancelAnimationFrame(loop);
                 scene.clear_canvas();
-                scene.display_text_lines(['finsihed scene'])
+                scene.display_text_lines(['press space to continue'])
                 remove_all_event_listeners();
             }
            

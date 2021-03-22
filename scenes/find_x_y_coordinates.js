@@ -7,7 +7,7 @@ const build_scene = (ctx) =>{
     const scene = new Scene(ctx);
 
     // create instructions
-    scene.instructions = new Instructions('Find X & Y Coordinates', ['Move the point with the arrow keys', 'Press Enter to place the point', 'Get 5 in a row to continue', 'Try as many times as you like! (There is no penalty)']);
+    scene.instructions = new Instructions('Find X & Y Coordinates', ['Move the point with the arrow keys', 'Press Enter to place the point', 'Get 8 in a row to continue', 'Try as many times as you like! (There is no penalty)']);
     
     scene.handle_instructions(); // handle instructions
     scene.end_contion = false; // set end condition to false initially
@@ -22,7 +22,7 @@ const build_scene = (ctx) =>{
     const satisfy_end_condition = (e)=>{
         if(e.code == 'Enter' && scene.end_condition){
             scene.end_condition = true;
-           // console.log('end condition satisfied', scene.end_condition);
+            console.log('end condition satisfied', scene.end_condition);
         }
     }
 
@@ -67,7 +67,7 @@ const build_scene = (ctx) =>{
 
         let targetPoints = [{x:0, y:0}] // always move to origin first
         // create four more target points
-        for (let i = 0; i < 4; i++){
+        for (let i = 0; i < 20; i++){
             let coords = get_random_coords();
             targetPoints.push(coords);
         }
@@ -97,8 +97,8 @@ const build_scene = (ctx) =>{
                 plane.points[point_index].y == targetPoints[point_index].y 
             ){
                 score += 1
-                if(score >= 2){
-                    //console.log('goal met')
+                if(score >= 8){
+                    console.log('goal met')
                     scene.end_condition = true;
                     cancelAnimationFrame(loop);
                     //scene.clear_canvas();
@@ -162,7 +162,7 @@ const build_scene = (ctx) =>{
                 case 'Enter':
                     get_new_point(0,0);
                     check_score();
-                    if(score == 5){end_condition = true;}else{
+                    if(score == 8){end_condition = true;}else{
                         point_index += 1;
                     }
                     
@@ -180,7 +180,7 @@ const build_scene = (ctx) =>{
         let loop = ()=>{
 
             if(!scene.end_condition){ // does not redo loop if end condition is satisfied;
-            //console.log('animation running');
+            console.log('animation running');
 
             scene.clear_canvas(); // clears canvas
 

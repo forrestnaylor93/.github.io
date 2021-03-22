@@ -133,7 +133,7 @@ const get_x_and_y_coordinates_finding = (ctx)=>{
                 case 'Enter':
                     get_new_point(0,0);
                     check_score();
-                    if(score == 5){end_condition = true;}
+                    if(score == 8){end_condition = true;}
                     point_index += 1;
                     
                 break;
@@ -183,10 +183,10 @@ const get_x_and_y_coordinates_finding = (ctx)=>{
     }
     x_and_y_coordinates_finding.instructions = new Instructions(
         [
-            'Your task is to move the blue point to the correct cooridnates.',
+            'Your task is to move the point to the correct cooridnates.',
             'Use your arrow keys to move around',
             'The correct Coordinates are at the top of the Screen (X, Y)',
-            'You must get 5 in a row without any mistakes to start the next section',
+            'You must get 8 in a row without any mistakes to start the next section',
             'Try as many times as you need! There is no penalty.',
         ],
         'Finding X & Y Coordinates'

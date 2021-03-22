@@ -8,7 +8,7 @@ const build_scene = (ctx) =>{
     const scene = new Scene(ctx);
 
     // create instructions
-    scene.instructions = new Instructions('Slope Magnitude', ['Click the corresponding button to say wheter the slope is:', 'exactly equal to one', 'bigger than 1', 'smaller than 1']);
+    scene.instructions = new Instructions('Slope Magnitude', ['Click the corresponding button to say wheter the slope is:', 'exactly equal to one', 'bigger than 1', 'smaller than 1', 'decide if it is negative or positive', 'be aware of special slopes like horizontal and vertical lines', 'must complete 12']);
     
     scene.handle_instructions(); // handle instructions
     scene.end_contion = false; // set end condition to false initially
@@ -324,7 +324,7 @@ const build_scene = (ctx) =>{
                     scene.review_assets = [];
                    // student was correct
                    scene.score += 1;
-                   if(scene.score == 2){
+                   if(scene.score == 12){
                        scene.end_condition = true;
                        ctx.removeEventListener('mouseup', onclick_next_line)
                    }

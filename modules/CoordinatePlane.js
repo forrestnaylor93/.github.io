@@ -327,6 +327,7 @@ class CoordinatePlane{
             for(let x = left_most_line_x; x < this.m.x.max_unit; x++){
                 let line = new Line(x, this.m.y.min_unit, x, this.m.y.max_unit, this.grid_color, 1);
                 line.transparency =  0.4; 
+                if(line.x == 0){line.lineWidth = 3; line.transparency = 1}
                 this.gridlines.vertical.push(line);
             }
 
@@ -335,6 +336,7 @@ class CoordinatePlane{
             for (let y = bottom_line_y; y < this.m.y.max_unit; y ++){
                 let line = new Line(this.m.x.min_unit, y, this.m.x.max_unit, y, this.grid_color, 1);
                 line.transparency =  0.4; 
+                if(line.y == 0){line.lineWidth = 3; line.transparency = 1}
                 this.gridlines.horizontal.push(line);
             }
 

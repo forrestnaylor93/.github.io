@@ -130,7 +130,7 @@ const build_scene = (ctx) =>{
                     plane.points.shift();
                     plane.make_point(target_coordinates[current_index].x, target_coordinates[current_index].y)
                 }else{
-                    score = 1;
+                    score = 0;
                 }
             }
           });
@@ -175,7 +175,7 @@ const build_scene = (ctx) =>{
                     plane.points.shift();
                     plane.make_point(target_coordinates[current_index].x, target_coordinates[current_index].y)
                 }else{
-                    score -= 1;
+                    score = 0;
                 }
             }
           });
@@ -188,7 +188,7 @@ const build_scene = (ctx) =>{
             let target_x = plane.points[0].x;
             let target_y = plane.points[0].y;
             if(e.code == 'Enter'){
-                if(score == 2){
+                if(score == 5){
                     scene.end_condition = true;
                     scene.display_title('Complete! press space to continue')
                 }
@@ -201,7 +201,7 @@ const build_scene = (ctx) =>{
                     plane.points.shift();
                     plane.make_point(target_coordinates[current_index].x, target_coordinates[current_index].y)
                 }else{
-                    score -= 1;
+                    score = 0;
                 }
                 
             }

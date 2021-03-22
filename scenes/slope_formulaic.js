@@ -7,7 +7,7 @@ const build_scene = (ctx) =>{
     const scene = new Scene(ctx);
 
     // create instructions
-    scene.instructions = new Instructions('Slope Formula', ['You are give two points', 'You should not try to count visually', 'Use the Formula to find the slope', 'Round all answers to 2 decimals places', '1.765434... -> 1.77', '0.9230922 -> 0.92' ]);
+    scene.instructions = new Instructions('Slope Formula', ['You are give two points', 'You should not try to count visually', 'Use the Formula to find the slope', 'Round all answers to 2 decimals places', '1.765434... -> 1.77', '0.9230922 -> 0.92', 'Must complete 3' ]);
     
     scene.handle_instructions(); // handle instructions
     scene.end_contion = false; // set end condition to false initially
@@ -90,7 +90,7 @@ const build_scene = (ctx) =>{
             if(scene.answer_object.student_answer == scene.answer_object.fractional || scene.answer_object.student_answer == scene.answer_object.rounded){
               //  console.log('correct!')
                 scene.score += 1;
-                if(scene.score >= 2){scene.end_condition = true}
+                if(scene.score >= 3){scene.end_condition = true}
                 next_question();
             }else{
                 scene.score = 0;
