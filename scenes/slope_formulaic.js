@@ -109,7 +109,7 @@ const build_scene = (ctx) =>{
     // event listeners
     const handle_end_condition = scene.canvas.addEventListener('keydown', satisfy_end_condition)
     scene.canvas.addEventListener('keydown', (e)=>{
-        if(e.code == 'Enter'){
+        if(e.code == 'Enter' || e.code == 'NumpadEnter'){
             // check input
 
             // give tips/warnings

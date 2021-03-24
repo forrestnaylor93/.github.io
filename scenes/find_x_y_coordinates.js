@@ -91,45 +91,64 @@ const build_scene = (ctx) =>{
         }
 
         let check_score = ()=>{
+            if(
+                    plane.points[point_index].x == targetPoints[point_index].x &&
+                    plane.points[point_index].y == targetPoints[point_index].y 
+                ){
+                    scene.score += 1;
+                    point_index += 1;
+                    if(scene.score_needed == scene.score){
+                        scene.is_task_complete = true;
+                    }
+                }else{
+                    scene.score = 0;
+                    point_index += 0;
+                }
+
+        }
             
 
-            if(
-                plane.points[point_index].x == targetPoints[point_index].x &&
-                plane.points[point_index].y == targetPoints[point_index].y 
-            ){
-                scene.score += 1
-                if(scene.score >= scene.score_needed){
-                    scene.is_task_complete = true;
-                    cancelAnimationFrame(loop);
-                    //scene.clear_canvas();
-                    //scene.ctx.fillStyle = '#333';
-                    //scene.ctx.fillRect(0,0,scene.canvas.width, 100);
-                    remove_all_event_listeners();
-                    return;
-                }else{
-                    point_index +=1;
-                };
+           // if
 
+            // if(
+            //     plane.points[point_index].x == targetPoints[point_index].x &&
+            //     plane.points[point_index].y == targetPoints[point_index].y 
+            // ){
+            //     scene.score += 1
+            //     if(scene.score >= scene.score_needed){
+            //         scene.is_task_complete = true;
+            //         cancelAnimationFrame(loop);
+            //         //scene.clear_canvas();
+            //         //scene.ctx.fillStyle = '#333';
+            //         //scene.ctx.fillRect(0,0,scene.canvas.width, 100);
+            //         remove_all_event_listeners();
+            //         return;
+            //     }else{
+            //         point_index +=1;
+            //     };
 
+            // }else{
+            //     point_index += 1;
+            //     scene.score = 0;
+            // }
 
-            }else{
-                starting_coords = get_random_coords();
-                scene.score = 0;
-                point_index = -1;
-                plane.points = [];
-                plane.make_point(starting_coords.x, starting_coords.y)
-                let targetPoints = [{x:0, y:0}] // always move to origin first
-                 // create four more target points
-                for (let i = 0; i < 4; i++){
-                let coords = get_random_coords();
-                targetPoints.push(coords);
-            }
+            // else{
+            //     starting_coords = get_random_coords();
+            //     scene.score = 0;
+            //     point_index = -1;
+            //     plane.points = [];
+            //     plane.make_point(starting_coords.x, starting_coords.y)
+            //     let targetPoints = [{x:0, y:0}] // always move to origin first
+            //      // create four more target points
+            //     for (let i = 0; i < 4; i++){
+            //     let coords = get_random_coords();
+            //     targetPoints.push(coords);
+            // }
 
            
         
 
-            }
-        }
+    
         
 
         let get_new_point = ()=>{
@@ -163,6 +182,13 @@ const build_scene = (ctx) =>{
                 case 'Enter':
                     get_new_point(0,0);
                     check_score();
+                case 'NumpadEnter':
+                    get_new_point(0,0);
+                    check_score();
+                    if(scene.score == 1){
+                        alert('Hope this works for you Lizzie!')
+                    }
+                break;
                     
                     
                     
