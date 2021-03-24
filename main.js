@@ -106,16 +106,8 @@ canvas1.addEventListener('keydown',(e)=>{
 
 // get name
 //assesment.scenes[2].contents();
-const getName = () =>{
-    let name = window.prompt('Enter your name: ')
-    console.log(name);
-    if (name == '' || name == null){
-        getName();
-    }
 
-    return name;
-}
-let name  = getName();
+let name  = window.prompt('Enter your name: ')
 score.other_assets.push(name);
 
 assesment.start_assesment();
