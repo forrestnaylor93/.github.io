@@ -6,6 +6,7 @@ import {Button} from '../modules/Button.js';
 const build_scene = (ctx) =>{
     // create scene object
     const scene = new Scene(ctx);
+    scene.score_needed = 12;
 
     // create instructions
     scene.instructions = new Instructions('Slope Magnitude', ['Click the corresponding button to say wheter the slope is:', 'exactly equal to one', 'bigger than 1', 'smaller than 1', 'decide if it is negative or positive', 'be aware of special slopes like horizontal and vertical lines', 'must complete 12']);
@@ -168,7 +169,7 @@ const build_scene = (ctx) =>{
                 }
 
                 let correct_answer = {magnitude: magnitude, sign: sign};
-                console.log(correct_answer.magnitude, correct_answer.sign);
+                //console.log(correct_answer.magnitude, correct_answer.sign);
 
                 let student_answer = null
                 
@@ -313,7 +314,7 @@ const build_scene = (ctx) =>{
                 if(!button_clicked){return};
 
                 let checked_answer = check_if_correct();
-                console.log('checked answer',checked_answer);
+                //console.log('checked answer',checked_answer);
 
                 if(checked_answer.is_student_correct){
                     //turn off and clear review if necessary
@@ -324,8 +325,8 @@ const build_scene = (ctx) =>{
                     scene.review_assets = [];
                    // student was correct
                    scene.score += 1;
-                   if(scene.score == 12){
-                       scene.end_condition = true;
+                   if(scene.score == scene.score_needed){
+                       scene.is_task_complete = true;
                        ctx.removeEventListener('mouseup', onclick_next_line)
                    }
                     plane.lines = [];
@@ -433,7 +434,10 @@ const build_scene = (ctx) =>{
             scene.display_text_lines(['Negative Values'], x_negative, 300);
 
             // score
-            scene.display_text_lines(["Score: " + scene.score.toString()], 100, 100);
+            scene.ctx.fillStyle = "#ccc";
+            scene.display_score();
+            //
+            scene.display_next_button();
             //buttons
             scene.buttons.forEach((button)=>{button.draw()})
 
@@ -474,8 +478,8 @@ const build_scene = (ctx) =>{
            requestAnimationFrame(loop); // start loop again
             }else{ // otherwise break the loop
                 cancelAnimationFrame(loop);
-                scene.clear_canvas();
-                scene.display_text_lines(['Nicely done, press space to continue!'])
+               // scene.clear_canvas();
+                //scene.display_text_lines(['Nicely done, press space to continue!'])
                 remove_all_event_listeners();
             }
            

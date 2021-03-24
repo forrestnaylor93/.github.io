@@ -763,6 +763,8 @@ const runInput = () => {(function() {
           self._onkeyup();
         }
       },
+
+      
   
       /**
        * Place focus on the CanvasInput box, placing the cursor
@@ -828,6 +830,7 @@ const runInput = () => {(function() {
   
         return self.render();
       },
+
   
       /**
        * Removes focus from the CanvasInput box.

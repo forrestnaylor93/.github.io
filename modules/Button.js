@@ -15,6 +15,10 @@ class Button{
         this.text_color = '#ccc';
         this.border_width = 5;
         this.off_opacity = 0.7;
+        this.clicked = false;
+        this.end_condition = null
+        this.on_click = null;
+
 
 
         this.canvas.addEventListener('mousemove', (e)=>{
@@ -28,9 +32,27 @@ class Button{
                 }
                 //console.log(this.is_mouse_on)
         })
+
+        
+
+        this.canvas.addEventListener('mousedown', (e)=>{
+            if(this.is_mouse_on){
+                this.clicked = true;
+                this.on_click();
+            }
+        })
     }
 
-    chec
+    on_click = (end_condition)=>{
+        //console.log(this.end_condition)
+        end_condition = true;
+    };
+
+   
+
+    satisfy_end_condition = (end_condition)=>{
+        end_condition = true;
+    }
 
     draw(){
         if(this.is_mouse_on){

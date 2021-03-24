@@ -5,9 +5,10 @@ import {runInput} from '../modules/InputBox.js';
 const build_scene = (ctx) =>{
     // create scene object
     const scene = new Scene(ctx);
+    scene.score_needed = 3;
 
     // create instructions
-    scene.instructions = new Instructions('Visual Slope', [' Cound the lines visually to determine the slope', ' Find Δy - the change in y', ' Find Δx - the change in x', 'Then click outside the boxes', 'Finally press enter', 'Must complete 4'] );
+    scene.instructions = new Instructions('Visual Slope', ['Select a point by clicking on a convenient point on the graph (it has to be an intersection)' , ' Count the lines visually to determine the slope', ' Find Δy - the change in y', ' Find Δx - the change in x', 'Then click outside the boxes', 'Finally press enter', 'Must complete 4'] );
     
     scene.handle_instructions(); // handle instructions
     scene.end_contion = false; // set end condition to false initially
@@ -164,6 +165,7 @@ const build_scene = (ctx) =>{
         }
 
         const check_answer = ()=>{
+            console.log(scene.ready_to_answer)
             if(!scene.ready_to_answer){return}
             let answer_point = scene.other_assets[0];
            // console.log(answer_point);
@@ -179,11 +181,13 @@ const build_scene = (ctx) =>{
 
             //console.log('answer', answer_point.y/answer_point.x)
             //console.log('actual', scene.slope);
-            if(answer_point.y/answer_point.x ==  scene.slope){
+            console.log(scene.slope);
+            if((answer_point.y/answer_point.x -  scene.slope) < 0.01){
+                console.log('answer accepted');
                // console.log('correct!')
                 scene.score += 1;
-                if(scene.score >= 4){
-                    scene.end_condition = true;
+                if(scene.score == scene.score_needed){
+                    scene.is_task_complete = true;
                     inputX.destroy();
                     inputY.destroy();
                 }
@@ -193,13 +197,16 @@ const build_scene = (ctx) =>{
                 plane.lines = [];
                 let slopes = create_slopes();
                 let lines = make_lines_from_slopes(slopes, plane);
+                
                 plane.lines.push(lines[0]);
+                console.log(plane.lines);
                 //console.log(lines)
             
                 // initial line
                 let first_line = lines.shift();
                 plane.lines.push(first_line);
             }else{
+                scene.score = 0;
                // console.log('incorrect!');
             }
            // console.log(scene.other_assets);
@@ -235,24 +242,42 @@ const build_scene = (ctx) =>{
         
     
          // determine what should allow an end condition to be satisfied
-    const satisfy_end_condition = (e)=>{
-        if(e.code == 'Space'){
-            scene.end_condition = true;
+    const refresh = (e)=>{
+        if(e.code == 'KeyR'){
+            console.log('r')
+             // get new point 
+             plane.points = [];
+             plane.lines = [];
+             let slopes = create_slopes();
+             let lines = make_lines_from_slopes(slopes, plane);
+             
+             plane.lines.push(lines[0]);
+             console.log(plane.lines);
+             //console.log(lines)
+         
+             // initial line
+             let first_line = lines.shift();
+             plane.lines.push(first_line);
+         
+            
+            
+            
+            //scene.end_condition = true;
            // console.log('end condition satisfied', scene.end_condition);
         }
     }
 
 
     // event listeners
-    const handle_end_condition = scene.canvas.addEventListener('keydown', satisfy_end_condition);
+    const handle_end_condition = scene.canvas.addEventListener('keydown', refresh);
     scene.canvas.addEventListener('mousedown', handle_click);
-    scene.canvas.addEventListener('keydown', handle_enter)
+    //scene.canvas.addEventListener('keydown', handle_enter)
 
  
     
     // get rid of event listeners (at end)
     const remove_all_event_listeners = ()=>{
-        scene.canvas.removeEventListener('keydown', satisfy_end_condition);
+        scene.canvas.removeEventListener('keydown', refresh);
     }
 
     // create stuff
@@ -274,7 +299,7 @@ const build_scene = (ctx) =>{
         innerShadow: '0px 0px 5px rgba(0, 0, 0, 0.5)',
         placeHolder: '   Δx',
         placeHolderColor: 'cyan',
-        onsubmit: check_answer()
+        onsubmit: function(){check_answer()}
       });
 
       inputX._value == null;
@@ -297,7 +322,7 @@ const build_scene = (ctx) =>{
         boxShadow: '1px 1px 0px #fff',
         innerShadow: '0px 0px 5px rgba(0, 0, 0, 0.5)',
         placeHolder: '  Δy',
-        onsubmit: check_answer()
+        onsubmit:function(){check_answer()}
       });
 
     let slopes = create_slopes();
@@ -377,6 +402,8 @@ const build_scene = (ctx) =>{
 
            // console.log('ready to answer', ready_to_answer)
 
+           scene.display_score();
+           scene.display_next_button();
 
             // displays instructions if i is pressed
             if(scene.instructions_visible){scene.display_instructions();}
@@ -385,7 +412,7 @@ const build_scene = (ctx) =>{
             }else{ // otherwise break the loop
                 cancelAnimationFrame(loop);
                 scene.clear_canvas();
-                scene.display_text_lines(['press space to continue'])
+                //scene.display_text_lines(['press space to continue'])
                 remove_all_event_listeners();
             }
            

@@ -64,8 +64,6 @@ let score = build_score(ctx1);
 
 let end = build_end(ctx1);
 //scene.instructions_visible = true;
-
-
 assesment.scenes.push(opening);
 assesment.scenes.push(find_xy);
 assesment.scenes.push(label_xy);
@@ -108,13 +106,22 @@ canvas1.addEventListener('keydown',(e)=>{
 
 // get name
 //assesment.scenes[2].contents();
-const name  = window.prompt('Enter your name: ')
+const getName = () =>{
+    let name = window.prompt('Enter your name: ')
+    console.log(name);
+    if (name == '' || name == null){
+        getName();
+    }
+
+    return name;
+}
+let name  = getName();
 score.other_assets.push(name);
 
 assesment.start_assesment();
 //assesment.scenes[6].contents();
 
-//assesment.scenes[6].contents();
+//assesment.scenes[2].contents();
 
 //assesment.scenes[6].contents();
 

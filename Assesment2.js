@@ -1,3 +1,5 @@
+import { Button } from "./modules/Button.js";
+
 class Assesment2{
     constructor(ctx){
         this.ctx = ctx;
@@ -21,8 +23,8 @@ class Assesment2{
     }
 
     handle_next_scene_with_space(){
-        this.canvas.addEventListener('keydown', (e)=>{
-            if(e.code == 'Space' && this.currentScene.end_condition == true){
+        this.canvas.addEventListener('mouseup', (e)=>{
+            if(this.currentScene.end_condition == true){
                 this.next_scene();
             }
         })
@@ -64,12 +66,14 @@ class Assesment2{
 
 class Scene{
     constructor(ctx){
-        this.end_condition = false;
+        this.end_condition = false; // for ending scene
+        this.is_task_complete = false; // for when user task finished - make a prompt for the next scene
 
         this.ctx = ctx;
         this.canvas = this.ctx.canvas;
         this.instructions = null;
         this.contents = null;
+        this.loop = null;
         this.instructions_visible = false;
         this.review_on = false;
         this.ready_to_answer = false;
@@ -81,6 +85,11 @@ class Scene{
         this.start = null;
         this.end = null;
 
+        // score
+        this.score = 0;
+        this.score_needed = 10;
+
+
         // style
         this.instruction_background_color = "#333";
         this.color = "#ccc";
@@ -91,6 +100,17 @@ class Scene{
         this.line_spacing = 1.7
 
         //obj
+        this.button_width = 200;
+        this.button_height = 100;
+        this.next_button = new Button(ctx, 'Next', this.canvas.width - this.button_width - 10, 10, this.button_width,this.button_height);
+        this.next_button.on_click = () => {
+            if(this.is_task_complete){this.end_condition = true}
+        };
+        this.display_next_button = ()=>{
+            if(this.is_task_complete){
+                this.next_button.draw();
+            }
+        }
         this.buttons = [];
 
 
@@ -108,8 +128,8 @@ class Scene{
         let seconds = time%60;
         this.ctx.fillStyle = '#ccc';
         this.ctx.font = '60px Arial'
-        this.display_text_lines(['total time: ' + minutes + ' : ' + seconds], 500, 500);
-        console.log(time);
+        this.display_text_lines(['total time: ' + minutes + ' : ' + seconds], 50, this.canvas.height - 100);
+        //console.log(time);
         
        // return time;
 
@@ -144,6 +164,10 @@ class Scene{
         
 
         lines.forEach((line, index)=>{
+            if(typeof(line) != 'string'){
+                console.log('argument for display_text() needs to be array for display text')
+                console.log(line);
+            }
             this.ctx.fillText(line, xPos, yPos)
             yPos += this.line_spacing*this.font_size
         })
@@ -159,7 +183,14 @@ class Scene{
         //lines
         this.display_text_lines(this.instructions.lines)
 
+        this.display_score();
         this.show_time();
+    }
+
+    display_score(){
+        if(this.score_needed != 0){
+            this.display_text_lines(['Score: '+ this.score+ ' out of '+ this.score_needed + ' points.'], 50, this.canvas.height - 50);
+        }
     }
 
     handle_instructions = ()=>{

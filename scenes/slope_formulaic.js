@@ -5,6 +5,7 @@ import {runInput} from '../modules/InputBox.js';
 const build_scene = (ctx) =>{
     // create scene object
     const scene = new Scene(ctx);
+    scene.score_needed = 3;
 
     // create instructions
     scene.instructions = new Instructions('Slope Formula', ['You are give two points', 'You should not try to count visually', 'Use the Formula to find the slope', 'Round all answers to 2 decimals places', '1.765434... -> 1.77', '0.9230922 -> 0.92', 'Must complete 3' ]);
@@ -90,7 +91,7 @@ const build_scene = (ctx) =>{
             if(scene.answer_object.student_answer == scene.answer_object.fractional || scene.answer_object.student_answer == scene.answer_object.rounded){
               //  console.log('correct!')
                 scene.score += 1;
-                if(scene.score >= 3){scene.end_condition = true}
+                if(scene.score >= scene.score_needed){scene.is_task_complete = true}
                 next_question();
             }else{
                 scene.score = 0;
@@ -190,6 +191,9 @@ const build_scene = (ctx) =>{
 
             // display question
             display_question();
+
+            scene.display_score();
+            scene.display_next_button();
 
             //scene.display_text_lines(['Topics:', 'Find X & Y Coordinates', 'Label X & Y Coordinates', 'Slope Intuition - (Positive, Negative, Big, Small, Vertical, Horizontal)', 'Measuring Slope Visually', 'Measuring Slope with Formula', '', 'press i to continue'])
 

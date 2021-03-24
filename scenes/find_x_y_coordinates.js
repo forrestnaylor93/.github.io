@@ -6,25 +6,28 @@ const build_scene = (ctx) =>{
     // create scene object
     const scene = new Scene(ctx);
 
-    // create instructions
     scene.instructions = new Instructions('Find X & Y Coordinates', ['Move the point with the arrow keys', 'Press Enter to place the point', 'Get 8 in a row to continue', 'Try as many times as you like! (There is no penalty)']);
+    scene.score_needed = 8;
+
+    // create instructions
     
-    scene.handle_instructions(); // handle instructions
-    scene.end_contion = false; // set end condition to false initially
-
-
+   
     
-
     // contents of scene
     scene.contents = ()=>{
 
-        // determine what should allow an end condition to be satisfied
-    const satisfy_end_condition = (e)=>{
-        if(e.code == 'Enter' && scene.end_condition){
-            scene.end_condition = true;
-            console.log('end condition satisfied', scene.end_condition);
+        scene.handle_instructions(); // handle instructions
+
+        const check_task_completion = (e)=>{
+            if(e.code == 'KeyI'){
+                console.log('i pressed');
+                scene.is_task_complete = true;
+                scene.canvas.removeEventListener('keydown', movement_handler)
+            }
         }
-    }
+
+        // determine what should allow an end condition to be satisfied
+
 
     // objects made for scene
     let height = ctx.canvas.height - 200;
@@ -37,16 +40,14 @@ const build_scene = (ctx) =>{
 
 
     // event listeners
-    const handle_end_condition = scene.canvas.addEventListener('keydown', satisfy_end_condition)
     
     // get rid of event listeners (at end)
     const remove_all_event_listeners = ()=>{
-        scene.canvas.removeEventListener('keydown', satisfy_end_condition);
     }
 
     // copy and pasted code
     let end_condition = false;
-        let score = 0;
+        //let score = 0;
 
 
         let canvas = ctx.canvas;
@@ -96,24 +97,24 @@ const build_scene = (ctx) =>{
                 plane.points[point_index].x == targetPoints[point_index].x &&
                 plane.points[point_index].y == targetPoints[point_index].y 
             ){
-                score += 1
-                if(score >= 8){
-                    console.log('goal met')
-                    scene.end_condition = true;
+                scene.score += 1
+                if(scene.score >= scene.score_needed){
+                    scene.is_task_complete = true;
                     cancelAnimationFrame(loop);
                     //scene.clear_canvas();
-                    scene.ctx.fillStyle = '#333';
-                    scene.ctx.fillRect(0,0,scene.canvas.width, 100);
-                    scene.display_title('Complete!, Press Space to Continue');
+                    //scene.ctx.fillStyle = '#333';
+                    //scene.ctx.fillRect(0,0,scene.canvas.width, 100);
                     remove_all_event_listeners();
                     return;
+                }else{
+                    point_index +=1;
                 };
 
 
 
             }else{
                 starting_coords = get_random_coords();
-                score = 0;
+                scene.score = 0;
                 point_index = -1;
                 plane.points = [];
                 plane.make_point(starting_coords.x, starting_coords.y)
@@ -162,9 +163,7 @@ const build_scene = (ctx) =>{
                 case 'Enter':
                     get_new_point(0,0);
                     check_score();
-                    if(score == 8){end_condition = true;}else{
-                        point_index += 1;
-                    }
+                    
                     
                     
                 break;
@@ -202,12 +201,13 @@ const build_scene = (ctx) =>{
             }
 
             // display score
-
-            scene.display_text_lines(["Score: " + score.toString()], 100, 100);
+            scene.display_score();
+            //scene.display_text_lines(["Score: " + scene.score.toString()], 100, 100);
             // scene.display_as_text("Score: " + score.toString(), 100, 100);
             
             // display soought point
-            
+            //next_button.draw();
+            scene.display_next_button();
 
     
             
