@@ -88,7 +88,7 @@ const build_scene = (ctx) =>{
             scene.tips_on = false;
           //  console.log('fractional: ', scene.answer_object.fractional);
           //  console.log('rounded: ', scene.answer_object.rounded);
-            if(scene.answer_object.student_answer == scene.answer_object.fractional || scene.answer_object.student_answer == scene.answer_object.rounded){
+            if((scene.answer_object.student_answer - scene.answer_object.fractional) < .02 || (scene.answer_object.student_answer - scene.answer_object.rounded) < .02){
               //  console.log('correct!')
                 scene.score += 1;
                 if(scene.score >= scene.score_needed){scene.is_task_complete = true}

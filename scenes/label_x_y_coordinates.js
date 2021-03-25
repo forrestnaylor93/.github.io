@@ -68,7 +68,7 @@ const build_scene = (ctx) =>{
         const make_new_target_points = () =>{
             current_index = 0;
             target_coordinates  = [ ]
-            for(let i = 0; i < 5; i++){
+            for(let i = 0; i < 20; i++){
                 let coordinates = get_random_coords()
                 target_coordinates.push(coordinates);
                // console.log(target_coordinates);
