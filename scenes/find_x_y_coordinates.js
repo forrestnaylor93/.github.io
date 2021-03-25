@@ -91,6 +91,8 @@ const build_scene = (ctx) =>{
         }
 
         let check_score = ()=>{
+            console.log('hello');
+            console.log(targetPoints)
             if(
                     plane.points[point_index].x == targetPoints[point_index].x &&
                     plane.points[point_index].y == targetPoints[point_index].y 
@@ -104,7 +106,8 @@ const build_scene = (ctx) =>{
                     scene.score = 0;
                     point_index += 0;
                 }
-
+                
+                
         }
             
 
@@ -180,8 +183,10 @@ const build_scene = (ctx) =>{
                     move_point_right(plane.points[point_index]);
                 break;
                 case 'Enter':
+                    console.log('enter pressed')
                     get_new_point(0,0);
                     check_score();
+                break;
                 case 'NumpadEnter':
                     get_new_point(0,0);
                     check_score();
